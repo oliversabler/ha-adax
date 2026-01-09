@@ -1,0 +1,29 @@
+alias: Radiator Schedule
+description: "Increases temperature after 18:00 and lowers it again at 07:00"
+triggers:
+  - trigger: time
+    at: "18:00:00"
+    id: night
+  - trigger: time
+    at: "07:00:00"
+    id: day
+actions:
+  - choose:
+      - conditions:
+          - condition: trigger
+            id: night
+        sequence:
+          - action: climate.set_temperature
+            target:
+              entity_id: climate.adax_radiator_1 # Replace with your entity id
+            data:
+              temperature: 20
+      - conditions:
+          - condition: trigger
+            id: day
+        sequence:
+          - action: climate.set_temperature
+            target:
+              entity_id: climate.adax_radiator_1 # Replace with your entity id
+            data:
+              temperature: 18
